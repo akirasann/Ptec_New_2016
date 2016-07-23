@@ -1,4 +1,4 @@
-package Socket_Class2;
+﻿package Socket_Class2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import NEW_DB_1.Sql_view;
 
+// test
 public class DB {
 	private Connection conn = null;
 	private Statement stmt = null;
