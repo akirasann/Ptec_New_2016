@@ -7,8 +7,8 @@ public class Main_Access {
 
 	public static void main(String[] args) {
 
-
-		DB db = new DB();
+		Interface_access db = DB.getInstance();
+//		DB db = new DB();
 		try {
 			/** javadog */
 			db.initilize();

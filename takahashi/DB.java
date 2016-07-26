@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DB implements Interface_access {
+public class DB implements Interface_access{
 	private Connection conn = null;
 	private Statement stmt = null;
 	private Statement stmt2 = null;
@@ -22,7 +22,17 @@ public class DB implements Interface_access {
 	private String sqlStr_maxtime;
 	private String sqlStr;
 	private String sql_insert2;
+	//singleton
+	private static DB database = new DB();
 
+	private DB(){
+
+	}
+
+	public static DB getInstance(){
+
+		return database;
+	}
 	public Connection initilize() throws ClassNotFoundException, SQLException {
 		// JDBCドライバーのロード
 		Class.forName("com.mysql.jdbc.Driver");
