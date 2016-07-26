@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DB {
+public class DB implements Interface_access {
 	private Connection conn = null;
 	private Statement stmt = null;
 	private Statement stmt2 = null;
