@@ -1,4 +1,4 @@
-﻿package Socket_Class2;
+package Access_interface;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,16 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import NEW_DB_1.Sql_view;
-
-// test
 public class DB {
 	private Connection conn = null;
 	private Statement stmt = null;
 	private Statement stmt2 = null;
 	private ResultSet rset = null;
 	private long total = 0;
-	private Sql_view sv;
+
 	private long start;
 
 	private java.sql.PreparedStatement pstmt = null;
@@ -38,6 +35,7 @@ public class DB {
 	}
 
 	// 書き込み
+	/**引数キーボードから読み込んだmodel*/
 	public void write(Model2 model) throws SQLException, InterruptedException {
 
 		// プリコンパイル
@@ -58,6 +56,7 @@ public class DB {
 	}
 
 	// 読み込み
+	/** セレクトの結果をreturn*/
 	public Model2 read() throws SQLException, ClassNotFoundException {
 		// プリコンパイル
 		sqlStr_select = "select * from db_1 where time =  ?";

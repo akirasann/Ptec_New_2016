@@ -1,18 +1,16 @@
 
-package Socket_Class2;
+package Access_interface;
 
 import java.sql.SQLException;
 
-public class Main_Serialize {
+public class Main_Access {
 
 	public static void main(String[] args) {
 
-//		String hostname = args[0];
-//		int port = Integer.parseInt(args[1]);
-		// ClientSocket socket = new ClientSocket(hostname,port);
-		// socket.intilize();
+
 		DB db = new DB();
 		try {
+			/** javadog */
 			db.initilize();
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO 自動生成された catch ブロック

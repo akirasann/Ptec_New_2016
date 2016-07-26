@@ -1,4 +1,4 @@
-package Socket_Class2;
+package Access_interface;
 
 import java.io.Serializable;
 

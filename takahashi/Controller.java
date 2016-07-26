@@ -1,4 +1,4 @@
-package Socket_Class2;
+package Access_interface;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +13,9 @@ public class Controller {
 	Statement stmt = null;
 	ResultSet rs = null;
 
+	/** 引数 Viewインスタンスオブジェクト DBインスタンスオブジェクト*/
 	public Controller(View view, DB db) {
+
 		this.view = view;
 		this.db = db;
 	}
