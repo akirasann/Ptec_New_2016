@@ -1,4 +1,4 @@
-package Access_interface;
+package Access_AutoExecuter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -102,6 +102,9 @@ public class DB implements Interface_access{
 			}
 			if (conn != null) {
 				conn.close();
+			}
+			if (rset != null) {
+				rset.close();
 			}
 
 		} catch (SQLException e) {

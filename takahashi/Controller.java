@@ -1,4 +1,4 @@
-﻿package Access_interface;
+package Access_AutoExecuter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,17 +14,15 @@ public class Controller {
 	ResultSet rs = null;
 
 	/** 引数 Viewインスタンスオブジェクト DBインスタンスオブジェクト*/
-	public Controller(View view, Interface_access db) {
+	public Controller(View view, Interface_access db2) {
 
 		this.view = view;
-		this.db = db;
+		this.db = db2;
 	}
 
 	public void proc() throws Exception {
 
-		// JDBCドライバーのロード
-		Class.forName("com.mysql.jdbc.Driver");
-		try {
+
 			while (true) {
 
 				Model2 model2 = view.input();
@@ -35,17 +33,7 @@ public class Controller {
 
 				view.display(model2);
 			}
-		} finally {
-			if (stmt != null) {
-				// ステートメントをクローズ
-				stmt.close();
-			}
 
-			if (conn != null) {
-				// 接続をクローズ
-				conn.close();
-			}
-		}
 	}
 
 }
