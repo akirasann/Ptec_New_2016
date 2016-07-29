@@ -1,38 +1,39 @@
-package Access_AutoExecuter;
+package Access_Syncronized;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DB implements Interface_access{
+public class DB implements Interface_access {
 	private Connection conn = null;
 	private Statement stmt = null;
-	private Statement stmt2 = null;
+	private Statement stmt_read = null;
 	private ResultSet rset = null;
-	private long total = 0;
-
-	private long start;
-
-	private java.sql.PreparedStatement pstmt = null;
-
+	private ResultSet rset_read = null;
+	private PreparedStatement pstmt = null;
+	private PreparedStatement pstmt_read = null;
 	private String sqlStr_insert;
 	private String sqlStr_select;
 	private String sqlStr_maxtime;
 	private String sqlStr;
-	private String sql_insert2;
-	//singleton
+
+	// singleton
 	private static DB database = new DB();
 
-	private DB(){
+	public static final Object LOCK = new Object();
+
+	private DB() {
 
 	}
 
-	public static DB getInstance(){
+	public static DB getInstance() {
 
 		return database;
 	}
+
 	public Connection initilize() throws ClassNotFoundException, SQLException {
 		// JDBCドライバーのロード
 		Class.forName("com.mysql.jdbc.Driver");
@@ -41,52 +42,85 @@ public class DB implements Interface_access{
 		conn.setAutoCommit(false);
 		// SQL実行stmt
 		stmt = conn.createStatement();
-		return conn;
-	}
-
-	// 書き込み
-	/**引数キーボードから読み込んだmodel*/
-	public void write(Model2 model) throws SQLException, InterruptedException {
+		stmt_read = conn.createStatement();
 
 		// プリコンパイル
 		sqlStr_insert = "insert db_1  (id,message,time) values (?,?,CURRENT_TIMESTAMP)";
 		// パラメーター
 		pstmt = conn.prepareStatement(sqlStr_insert);
 
+		// プリコンパイル
+		sqlStr_select = "select * from db_1 where time =  ?";
+
+		pstmt_read = conn.prepareStatement(sqlStr_select);
+		return conn;
+	}
+
+	// class Global {
+	// static Object lock = new Object();
+	// }
+	// 書き込み
+	/**
+	 * 引数キーボードから読み込んだmodel
+	 *
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+
+	synchronized public void write(Model2 model) throws InterruptedException, SQLException {
+
+		// //自動コミットオフ
+		conn.setAutoCommit(false);
+
+		int id;
 		sqlStr = "select max(id) from db_1";
 		rset = stmt.executeQuery(sqlStr);
 		rset.next();
-		int id = rset.getInt("max(id)") + 1;
+
+		id = rset.getInt("max(id)") + 1;
+
+		sqlStr = "select id from db_1 where id = " + id + " for update";
+
+		Thread.sleep(3000);
+
+		// 文字数チェック
+		String input = model.toString();
+
+		if (input.length() > 255) {
+			throw new SQLException();
+		}
 
 		pstmt.setInt(1, id);
-		pstmt.setString(2, model.toString());
+
+		pstmt.setString(2, input);
+
 		pstmt.executeUpdate();
 
 		conn.commit();
+
 	}
 
 	// 読み込み
-	/** セレクトの結果をreturn*/
-	public Model2 read() throws SQLException, ClassNotFoundException {
-		// プリコンパイル
-		sqlStr_select = "select * from db_1 where time =  ?";
-		// パラメーター
-		pstmt = conn.prepareStatement(sqlStr_select);
+	/** セレクトの結果をreturn */
+	public Model2 read() throws SQLException, ClassNotFoundException, NullPointerException {
+		// //自動コミットオフ
+		conn.setAutoCommit(false);
+
 		// 更新日が最新のものをセレクト
 		sqlStr_maxtime = "select max(time) from db_1";
-		rset = stmt.executeQuery(sqlStr_maxtime);
-		rset.next();
-		String time = rset.getString("max(time)");
+		rset_read = stmt_read.executeQuery(sqlStr_maxtime);
+		rset_read.next();
+		String time = rset_read.getString("max(time)");
 		// DBが空のとき
 		if (time == null) {
 			System.out.println("データはありません.書き込みしてください ");
 			return null;
 		}
-		pstmt.setString(1, time);
-		rset = pstmt.executeQuery();
-		rset.next();
-		String ptr = "id:" + rset.getInt("id") + "\t" + "message:" + "" + rset.getString("message") + "\t" + "time:"
-				+ rset.getString("time");
+		pstmt_read.setString(1, time);
+		rset_read = pstmt_read.executeQuery();
+		rset_read.next();
+		String ptr = "id:" + rset_read.getInt("id") + "\t" + "message:" + "" + rset_read.getString("message") + "\t"
+				+ "time:" + rset_read.getString("time");
 		return new Model2(ptr);
 	}
 
@@ -96,15 +130,24 @@ public class DB implements Interface_access{
 			if (pstmt != null) {
 				pstmt.close();
 			}
+			if (pstmt_read != null) {
+				pstmt_read.close();
+			}
 
 			if (stmt != null) {
 				stmt.close();
+			}
+			if (stmt_read != null) {
+				stmt_read.close();
 			}
 			if (conn != null) {
 				conn.close();
 			}
 			if (rset != null) {
 				rset.close();
+			}
+			if (rset_read != null) {
+				rset_read.close();
 			}
 
 		} catch (SQLException e) {

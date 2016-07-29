@@ -1,4 +1,4 @@
-package Access_AutoExecuter;
+package Access_Syncronized;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ public class Controller {
 	Statement stmt = null;
 	ResultSet rs = null;
 
-	/** 引数 Viewインスタンスオブジェクト DBインスタンスオブジェクト*/
+	/** 引数 Viewインスタンスオブジェクト DBインスタンスオブジェクト */
 	public Controller(View view, Interface_access db2) {
 
 		this.view = view;
@@ -22,17 +22,18 @@ public class Controller {
 
 	public void proc() throws Exception {
 
+		while (true) {
 
-			while (true) {
+			Model2 model2 = view.input();
 
-				Model2 model2 = view.input();
+			db.write(model2);
 
-				db.write(model2);
+			model2 = db.read();
 
-				model2 = db.read();
+			view.display(model2);
 
-				view.display(model2);
-			}
+
+		}
 
 	}
 

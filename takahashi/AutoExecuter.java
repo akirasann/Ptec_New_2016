@@ -1,19 +1,17 @@
-package Access_AutoExecuter;
+package Access_Syncronized;
 
 import java.sql.SQLException;
 
 public class AutoExecuter implements Runnable {
 
-
 	Interface_access db = DB.getInstance();
-	private boolean  judge=true;
+	private boolean judge = true;
 
-	public void run(){
+	public  void run() {
 		try {
-			while(judge){
-
-			db.write(new Model2("3秒後write()"));
-			Thread.sleep(3000);
+			while (judge) {
+				db.write(new Model2("3秒後write()"));
+				Thread.sleep(3000);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -21,7 +19,8 @@ public class AutoExecuter implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	public void threadFinish(){
+
+	public void threadFinish() {
 		judge = false;
 	}
 
