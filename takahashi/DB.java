@@ -1,4 +1,4 @@
-package Access_Syncronized;
+package junit.framework;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DB implements Interface_access {
+public class Db implements Interface_access {
 	private Connection conn = null;
 	private Statement stmt = null;
 	private Statement stmt_read = null;
@@ -21,20 +21,21 @@ public class DB implements Interface_access {
 	private String sqlStr;
 
 	// singleton
-	private static DB database = new DB();
+	private static Db database = new Db();
 
 	public static final Object LOCK = new Object();
 
-	private DB() {
+	private Db() {
 
 	}
 
-	public static DB getInstance() {
+	public static Db getInstance() {
 
 		return database;
 	}
 
 	public Connection initilize() throws ClassNotFoundException, SQLException {
+
 		// JDBCドライバーのロード
 		Class.forName("com.mysql.jdbc.Driver");
 		// MySQL接続
@@ -67,8 +68,8 @@ public class DB implements Interface_access {
 	 * @throws SQLException
 	 */
 
-	synchronized public void write(Model2 model) throws InterruptedException, SQLException {
-
+		public void write(Model2 model) throws InterruptedException, SQLException {
+			synchronized(this){
 		// //自動コミットオフ
 		conn.setAutoCommit(false);
 
@@ -97,12 +98,14 @@ public class DB implements Interface_access {
 		pstmt.executeUpdate();
 
 		conn.commit();
+			}
 
 	}
 
 	// 読み込み
 	/** セレクトの結果をreturn */
 	public Model2 read() throws SQLException, ClassNotFoundException, NullPointerException {
+
 		// //自動コミットオフ
 		conn.setAutoCommit(false);
 

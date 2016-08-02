@@ -1,10 +1,10 @@
-package Access_Syncronized;
+package junit.framework;
 
 import java.sql.SQLException;
 
-public class AutoExecuter implements Runnable {
+public class AutoExecuter_synchronized implements Runnable {
 
-	Interface_access db = DB.getInstance();
+	Interface_access db = Db.getInstance();
 	private boolean judge = true;
 
 	public  void run() {

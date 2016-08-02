@@ -1,4 +1,4 @@
-package Access_Syncronized;
+package junit.framework;
 
 import java.io.Serializable;
 

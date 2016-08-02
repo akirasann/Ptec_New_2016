@@ -1,14 +1,14 @@
 
-package Access_Syncronized;
+package junit.framework;
 
 import java.sql.SQLException;
 
-public class Main_Access {
+public class Main_access {
 
 	public static void main(String[] args) {
 
-		Interface_access db = DB.getInstance();
-		AutoExecuter aex = new AutoExecuter();
+		Interface_access db = Db.getInstance();
+		AutoExecuter_synchronized aex = new AutoExecuter_synchronized();
 
 		try {
 			/** javadoc */
@@ -24,7 +24,7 @@ public class Main_Access {
 
 			Controller ctrl = new Controller(view, db);
 			ctrl.proc();
-			System.out.println(100);
+
 		} catch (NumberFormatException e1) {
 
 			e1.printStackTrace();

@@ -1,11 +1,12 @@
 
-package Access_Syncronized;
+package junit.framework;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class View {
+
 
 	BufferedReader keyboard;
 	String str;
