@@ -1,4 +1,4 @@
-package junit.framework;
+package db2;
 
 import static org.junit.Assert.*;
 
