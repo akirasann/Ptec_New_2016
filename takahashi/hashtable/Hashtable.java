@@ -1,58 +1,60 @@
 package hashtable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 class Hashtable {
 	private int args;
-	private int args_two;
-	private Map<String,String> map[];
+	private List<Person>[] list;
+
 	/**
 	 * 前提条件: コマンドライン引数を使う。
 	 * 処理内容: 格納する名前の配列の数
-	 * 			 mapを格納する配列の数
 	 * @param args
-	 * @param args_two
+	 *            // TODO : agrs_two必要なし。
 	 */
-	Hashtable(String args,String args_two) {
+	Hashtable(String args) {
 		this.args = Integer.parseInt(args);
-		this.args_two = Integer.parseInt(args_two);
 	}
-
 	/**
-	 * 処理内容: ハッシュコードから格納する場所を決める。
-	 * 			 名前と性別をセットにして格納する。
+	 * 格納する配列を作成する。
 	 */
-	public void initilize() {
-		// Map の作成
-		map = new Map[args];
-		String[] out = { "Sue", "Nell", "Array", "Joe", "Dan", "Bob" };
-		// Mapインスタンス化
-		for (int i = 0; i < 6; i++) {
-			map[i] = new HashMap<String, String>();
-		}
-
-		for (int j= 0; j < 3;j++) {
-			// ハッシュコードで与えられた配列に格納する。
-			map[ (out[j].hashCode()) % args_two].put(out[j], "Female");
-		}
-
-		for (int j = 3; j < 6; j++) {
-			map[(out[j].hashCode()) % args_two].put(out[j], "Man");
+	public void initilize(){
+		list = new List[args];
+		for (int i = 0; i < args; i++) {
+			list[i] = new ArrayList<Person>();
 		}
 	}
 
 	/**
-	 * 前提条件:initilize()関数を呼び出しておくこと。
+	 * 前提条件: initilize()呼び出しておくこと
+	 * 処理内容: ハッシュコードから格納する場所を決める
+	 */
+	public void storage(Person p) {
+		// TODO : mainから与えるように変更。
+		// TODO : Personクラスを作成。private final String name; private final boolean
+		// isFemale; getterは作って。setterはいらない。
+		// TODO :コンストラクタで作成した後は不変。
+		list[(p.getName().hashCode()) % (args - 1)].add(p);
+	}
+
+	/**
+	 * 前提条件:initilize(),Storage()関数を呼び出しておくこと。
 	 * アウトプット: 名前から性別を得る。
+	 * 処理内容: ハッシュコードから配列特定する。
 	 * @param key
 	 */
-	// 一致するもの取り出す。
-	public void getA(String key) {
-		for (int k= 0; k < 6; k++) {
-			if (map[k]!= null && ((String) map[k].get(key) != null)) {
-					System.out.println("性別:"+(String) map[k].get(key));
-			}
+	public String getGender(String key) {
+		// TODO : keyのhashcode/argsから配列を特定するロジックに変更する。
+		String ptr = "該当なし";
+			for (Person p : list[(key.hashCode()) % (args - 1)]) {
+				if (p.getName().equals(key)) {
+					if (p.getisFemale() == true) {
+						ptr = "女";
+					} else {
+						ptr = "男";
+					}
+				}
+			}return ptr;
 		}
 	}
-}

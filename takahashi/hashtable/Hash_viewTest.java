@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class Hash_viewTest {
 	/**
-	 * 前提: 標準入力からデータを得る。
+	 * 処理内容: 標準入力のテスト。
 	 * @throws IOException
 	 */
 	@Test
@@ -17,7 +17,6 @@ public class Hash_viewTest {
 		Hash_view hv= new Hash_view();
 		String key=hv.initilize();
 
-		assertThat("test",is(key));
+		assertThat(key,is("test"));
 	}
-
 }

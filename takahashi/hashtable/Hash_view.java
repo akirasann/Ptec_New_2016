@@ -11,6 +11,7 @@ public class Hash_view {
 
 	/**
 	 * アウトプット: 標準入力でデータを取得する。
+	 * 処理内容: 結果を画面に表示する。
 	 * @return
 	 * @throws IOException
 	 */
@@ -18,5 +19,9 @@ public class Hash_view {
 		System.out.print("名前:");
 		key = br.readLine();
 		return key;
+	}
+
+	public void display(String  seibetsu){
+		System.out.println("性別:"+seibetsu);
 	}
 }
