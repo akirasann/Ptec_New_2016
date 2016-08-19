@@ -36,6 +36,8 @@ class Hashtable {
 		// isFemale; getterは作って。setterはいらない。
 		// TODO :コンストラクタで作成した後は不変。
 		list[(p.getName().hashCode()) % (args - 1)].add(p);
+		list[(p.getName().hashCode()) % (args -1)].remove(p);
+
 	}
 
 	/**
@@ -44,17 +46,44 @@ class Hashtable {
 	 * 処理内容: ハッシュコードから配列特定する。
 	 * @param key
 	 */
-	public String getGender(String key) {
+	// TODO: 戻り値はPersonに変更, 引数はString nameに変更
+	public Person read(String name) {
 		// TODO : keyのhashcode/argsから配列を特定するロジックに変更する。
-		String ptr = "該当なし";
-			for (Person p : list[(key.hashCode()) % (args - 1)]) {
-				if (p.getName().equals(key)) {
-					if (p.getisFemale() == true) {
-						ptr = "女";
-					} else {
-						ptr = "男";
-					}
-				}
-			}return ptr;
+		List<Person> plist = list[(name.hashCode()) % (args -1)];
+
+		for (Person p : plist){
+			if (p.getName().equals(name)) {
+				return p;
+			}
 		}
+		return null;
 	}
+
+	/**
+	 * 前提条件:initilize(),Storage()関数を呼び出しておくこと。
+	 * 処理内容:remove()で要素を削除する。
+	 * @param model
+	 */
+	public void delete(Person p){
+//			System.out.println(list[(p.getName().hashCode()) % (args -1)]);
+//			list[(p.getName().hashCode()) % (args -1)].remove(p.getName());
+//			for(Person p2:list[(p.getName().hashCode()) % (args -1)]){
+//				System.out.println(p2.getName());
+//			}
+
+
+		for(Person p2:list[(p.getName().hashCode()) % (args -1)]){
+
+			if(p2.getName().equals(p.getName())){
+
+				System.out.println(p2.getName()+"\t"+p2);
+				System.out.println(list[0]);
+
+				list[(p.getName().hashCode()) % (args -1)].remove(p2);
+
+			}
+		}
+
+	}
+}
+

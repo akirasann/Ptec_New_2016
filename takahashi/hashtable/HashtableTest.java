@@ -54,7 +54,7 @@ public class HashtableTest {
 				if (p.getisFemale() == true) {
 					expect = "女";
 					assertThat("女", is(expect));
-				} else {
+				}else {
 					expect = "男";
 					assertThat("男", is(expect));
 				}

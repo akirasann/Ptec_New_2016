@@ -15,13 +15,18 @@ public class Hash_view {
 	 * @return
 	 * @throws IOException
 	 */
-	public String initilize() throws IOException{
-		System.out.print("名前:");
+	public int getOperationNum() throws IOException{
 		key = br.readLine();
-		return key;
+		return Integer.parseInt(key);
 	}
 
-	public void display(String  seibetsu){
-		System.out.println("性別:"+seibetsu);
+	public Person getPerson() throws IOException {
+		// TODO : implement
+		key=br.readLine();
+		return new Person(key,true);
+	}
+
+	public void display(Person  model){
+		System.out.println("性別:"+model.getisFemale());
 	}
 }

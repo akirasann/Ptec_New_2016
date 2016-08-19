@@ -13,14 +13,14 @@ public class PersonTest {
 	 */
 
 	public void femaletest(){
-		Person pson = new Person("Joe",true);
+		Person pson = new Person("test",true);
 		boolean actual = pson.getisFemale();
 		assertTrue(actual);
 	}
 	@Test
 	public void getNametest(){
-		Person pson = new Person("Joe",true);
-		String expect="Joe";
+		Person pson = new Person("test",true);
+		String expect="test";
 		String actual=pson.getName();
 		assertThat(actual,is(expect));
 	}
