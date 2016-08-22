@@ -15,24 +15,21 @@ public class Hash_viewTest {
 		 * @throws IOException
 		 */
 		@Test
-		public void Nametest() throws IOException {
-			Hash_view hv = new Hash_view();
-			String expect = "test";
-			assertThat(hv.getOperationNum().toString(), is(expect));
-		}
-
-		@Test
 		public void Numtest() throws IOException {
 			Hash_view hv = new Hash_view();
-			String expect = "100";
-			assertThat(hv.getOperationNum().toString(), is(expect));
+			int expect = 1;
+			System.out.print("NUm: ");
+			int actual=hv.getOperationNum();
+			assertThat(actual, is(expect));
 		}
-
 		@Test
-		public void initilizeGender() throws IOException {
+		public void test() throws IOException {
 			Hash_view hv = new Hash_view();
-			String expect = "男";
-			assertThat(hv.getOperationNum().toString(), is(expect));
+			String expect = "test";
+			System.out.print("Name: ");
+			Person person=hv.getPerson();
+			String actual = person.getName();
+			assertThat(actual,is(expect));
 		}
 	}
 

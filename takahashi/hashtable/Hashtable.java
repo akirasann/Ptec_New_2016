@@ -1,6 +1,7 @@
 package hashtable;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 class Hashtable {
@@ -36,8 +37,6 @@ class Hashtable {
 		// isFemale; getterは作って。setterはいらない。
 		// TODO :コンストラクタで作成した後は不変。
 		list[(p.getName().hashCode()) % (args - 1)].add(p);
-		list[(p.getName().hashCode()) % (args -1)].remove(p);
-
 	}
 
 	/**
@@ -64,26 +63,21 @@ class Hashtable {
 	 * 処理内容:remove()で要素を削除する。
 	 * @param model
 	 */
-	public void delete(Person p){
-//			System.out.println(list[(p.getName().hashCode()) % (args -1)]);
-//			list[(p.getName().hashCode()) % (args -1)].remove(p.getName());
-//			for(Person p2:list[(p.getName().hashCode()) % (args -1)]){
-//				System.out.println(p2.getName());
-//			}
+	public Person delete(Person p){
 
+		try{
+			for(Person p2:list[(p.getName().hashCode()) % (args -1)]){
 
-		for(Person p2:list[(p.getName().hashCode()) % (args -1)]){
-
-			if(p2.getName().equals(p.getName())){
-
-				System.out.println(p2.getName()+"\t"+p2);
-				System.out.println(list[0]);
-
-				list[(p.getName().hashCode()) % (args -1)].remove(p2);
-
+				if(p2.getName().equals(p.getName())){
+					list[(p.getName().hashCode()) % (args -1)].remove(p2);
+					break;
+				}
 			}
+		}catch(ConcurrentModificationException e){
+			e.printStackTrace();
 		}
-
+		return p;
 	}
+
 }
 

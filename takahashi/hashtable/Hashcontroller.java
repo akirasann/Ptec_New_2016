@@ -15,12 +15,9 @@ public class Hashcontroller {
 		this.hv=hv;
 	}
 	/**
-	 * 前提条件: DB接続の準備 initilize関数の呼び出し。
-	 *           格納するコレクションの準備
-	 *         	 initilize関数の呼び出し
+
+	 * 前提条件: 格納するコレクションの準備
 	 *			 データをコレクションに格納する
-	 *           hashinitilize関数を呼び出しておくこと
-	 * 引数: Hashtableクラス、Hashcontrollerのオブジェクトとする
 	 * 処理内容: 標準入力から分岐処理。
 	 * @param hs
 	 * @throws InterruptedException
@@ -34,19 +31,21 @@ public class Hashcontroller {
 			System.out.println("検索1 削除2  終了3");
 			System.out.print("上記から選んでを入力してください:");
 			model_num = hv.getOperationNum();
-
 			// 検索時
 			if (model_num==1) {
 				System.out.print("名前を入力してください:");
-				hv.display(hs.read((hv.getPerson()).getName()));
+				try{
+					hv.display(hs.read((hv.getPerson()).getName()));
+				}catch(NullPointerException e){
+					System.out.println("名前はありません");
+				}
 			}
-
 			// 削除時
 			if (model_num==2){
 				System.out.print("名前を入力してください:");
-				hs.delete(hv.getPerson());
+				Person p = hs.delete(hv.getPerson());
+				System.out.println(p.getName()+"削除しました");
 			}
-
 			//終了
 			if (model_num==3) {
 				throw new Exception("終了");
