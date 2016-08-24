@@ -11,7 +11,7 @@ public class IntegerSorted implements SortedObject {
 	}
 
 	@Override
-	public boolean compare(SortedObject x) {
+	public boolean compare(IntegerSorted x) {
 		// TODO 自動生成されたメソッド・スタブ
 		return this.key > x.key;
 	}

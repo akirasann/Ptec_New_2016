@@ -16,6 +16,7 @@ public class SortedList<T extends SortedObject> {
 		datas[datas.length] = obj;
 		for(i=0;i<datas.length;i++){
 			/*	memo: <T>型変数にある機能のオブジェクトの型が入ると想定する。
+			 * 	 	  8/24 数字なのでint かIntegerではないか
 			*         配列は数字が順番に並んでいるとする。
 			*		  配列なのであらたに追加はできない
 			*	      新しくインスタンス フィールドで定義しているので、新しく更新されている。
@@ -28,6 +29,7 @@ public class SortedList<T extends SortedObject> {
 				data = datas[i];
 				datas[i] = datas[datas.length];
 				datas[datas.length] = data;
+				//8月24日 この後並び替えで昇順にする。
 			}
 		}
 	}
@@ -35,10 +37,10 @@ public class SortedList<T extends SortedObject> {
 	 * 処理内容: SortedListから引数posと等しいものを取り出す。
 	 * @param pos
 	 */
-	public void get(int pos){
+	public T get(int pos){
 		for(int i=0;i<datas.length;i++){
 			if(datas[i].key == pos){
-				datas[i].key;
+				return datas[i];
 			}
 		}
 	}
@@ -51,6 +53,7 @@ public class SortedList<T extends SortedObject> {
 		for(int i=0; i<datas.length;i++){
 			if(datas[i].key.equals(obj.key)){
 				datas[i]=datas[i-1];
+				//8月24日 この後並び替えて昇順にする。
 			}
 		}
 
