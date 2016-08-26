@@ -2,7 +2,7 @@ package sortedlist;
 
 public interface SortedObject {
 
-	public  boolean compare(SortedObject x);
+	public  boolean compare(IntegerSorted x);
 
 
 }
